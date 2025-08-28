@@ -552,3 +552,4 @@ async function updateMastery(ctx, {studentId, conceptId, delta}) {
 ---
 
 This gives you a **production-shaped** repo skeleton with **every file you’ll need** to build the FoT Knowledge-Miner platform the way you described: WASM per role/topic, cross-domain AKG, miners, assistants, and FoT ethics/measurement baked in. If you want, I can generate a zipped scaffold (all folders & boilerplate files) in the next message so you can download and `git add` directly.
+
