@@ -1,0 +1,11 @@
+package fot:metrics;
+
+world metrics_api {
+  import metrics {
+    record_virtue: func(user_id: string, virtue: string, delta: f64) -> result<(), u32>;
+    record_usage: func(user_id: string, action: string, duration: u64) -> result<(), u32>;
+    get_stats: func(user_id: string) -> result<string, u32>;
+    export_metrics: func() -> result<string, u32>;
+  }
+  export metrics_collector: func(input: string) -> string;
+}

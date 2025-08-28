@@ -1,0 +1,11 @@
+package fot:files;
+
+world files_api {
+  import files {
+    fetch_dataset: func(url: string) -> result<string, u32>;
+    cache_get: func(key: string) -> result<string, u32>;
+    cache_set: func(key: string, value: string) -> result<(), u32>;
+    open_local: func(path: string) -> result<string, u32>;
+  }
+  export file_processor: func(input: string) -> string;
+}

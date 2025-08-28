@@ -1,0 +1,47 @@
+@prefix fot: <https://fot.education/schema#> .
+@prefix ex:  <https://fot.education/id/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+# Cross-Domain Links (pre-wired for non-linear learning)
+
+# Biology ↔ Economics
+ex:link_eco_bio_1 a fot:DomainLink ;
+  fot:source ex:Ecosystem ;
+  fot:target ex:Resource_Use ;
+  fot:linkType "analogy" ;
+  rdfs:comment "Ecosystems and resource use share principles of sustainability and balance" .
+
+ex:link_eco_bio_2 a fot:DomainLink ;
+  fot:source ex:Metabolism ;
+  fot:target ex:Circular_Economy ;
+  fot:linkType "analogy" ;
+  rdfs:comment "Metabolic cycles in biology mirror circular economy principles" .
+
+# Chemistry ↔ Climate
+ex:link_chem_climate_1 a fot:DomainLink ;
+  fot:source ex:Carbon_Cycle ;
+  fot:target ex:Climate_Model ;
+  fot:linkType "entails" ;
+  rdfs:comment "Understanding carbon cycles is essential for climate modeling" .
+
+# Physics ↔ Climate
+ex:link_physics_climate_1 a fot:DomainLink ;
+  fot:source ex:Entropy ;
+  fot:target ex:Entropy_in_Atmosphere ;
+  fot:linkType "entails" ;
+  rdfs:comment "Physical entropy principles directly apply to atmospheric processes" .
+
+# Economics ↔ Virtues
+ex:link_econ_virtue_1 a fot:DomainLink ;
+  fot:source ex:Cost_Benefit ;
+  fot:target ex:Honesty, ex:Justice ;
+  fot:linkType "requiresVirtue" ;
+  rdfs:comment "Cost-benefit analysis requires honesty in data and justice in evaluation" .
+
+# Biology ↔ Virtues
+ex:link_bio_virtue_1 a fot:DomainLink ;
+  fot:source ex:Photosynthesis ;
+  fot:target ex:Curiosity ;
+  fot:linkType "requiresVirtue" ;
+  rdfs:comment "Understanding photosynthesis requires curiosity about natural processes" .

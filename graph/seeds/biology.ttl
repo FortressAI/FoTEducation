@@ -1,0 +1,45 @@
+@prefix fot: <https://fot.education/schema#> .
+@prefix ex:  <https://fot.education/id/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+# Biology Concepts
+ex:Photosynthesis a fot:Concept ;
+  fot:label "Photosynthesis" ;
+  rdfs:comment "The process by which plants convert light energy into chemical energy" ;
+  fot:domain "Biology" ;
+  fot:links ex:Carbon_Cycle, ex:Resource_Use .
+
+ex:Ecosystem a fot:Concept ;
+  fot:label "Ecosystem" ;
+  rdfs:comment "A community of living organisms and their physical environment" ;
+  fot:domain "Biology" ;
+  fot:links ex:Resource_Use .
+
+ex:Metabolism a fot:Concept ;
+  fot:label "Metabolism" ;
+  rdfs:comment "The set of life-sustaining chemical reactions in organisms" ;
+  fot:domain "Biology" ;
+  fot:links ex:Circular_Economy .
+
+# Biology Claims
+ex:Claim_Photo_1 a fot:Claim ;
+  fot:about ex:Photosynthesis ;
+  fot:state "superposed" ;
+  fot:requiresVirtue fot:Honesty, fot:Curiosity ;
+  fot:hasProvenance <https://en.wikipedia.org/wiki/Photosynthesis> ;
+  fot:confidence 0.8 .
+
+ex:Claim_Eco_1 a fot:Claim ;
+  fot:about ex:Ecosystem ;
+  fot:state "superposed" ;
+  fot:requiresVirtue fot:Honesty, fot:Curiosity ;
+  fot:hasProvenance <https://en.wikipedia.org/wiki/Ecosystem> ;
+  fot:confidence 0.9 .
+
+ex:Claim_Meta_1 a fot:Claim ;
+  fot:about ex:Metabolism ;
+  fot:state "superposed" ;
+  fot:requiresVirtue fot:Honesty, fot:Curiosity ;
+  fot:hasProvenance <https://en.wikipedia.org/wiki/Metabolism> ;
+  fot:confidence 0.85 .

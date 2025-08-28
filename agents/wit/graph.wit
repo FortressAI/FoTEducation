@@ -1,0 +1,12 @@
+package fot:graph;
+
+world graph_api {
+  import graph {
+    graph_read: func(query: string) -> result<string, u32>;   // returns JSON
+    graph_write: func(mutation: string) -> result<string, u32>;
+    begin_txn: func() -> u64;
+    commit_txn: func(txn: u64) -> result<(), u32>;
+    auth_ctx: func() -> string;   // role, subject ids, class scopes
+  }
+  export run: func(input: string) -> string;
+}

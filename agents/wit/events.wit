@@ -1,0 +1,11 @@
+package fot:events;
+
+world events_api {
+  import events {
+    publish: func(topic: string, message: string) -> result<(), u32>;
+    subscribe: func(topic: string) -> result<u64, u32>;
+    unsubscribe: func(subscription: u64) -> result<(), u32>;
+    notify: func(user_id: string, message: string) -> result<(), u32>;
+  }
+  export event_handler: func(event: string) -> string;
+}

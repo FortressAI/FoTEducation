@@ -1,0 +1,41 @@
+@prefix fot: <https://fot.education/schema#> .
+@prefix ex:  <https://fot.education/id/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+# Core Virtues
+ex:Honesty a fot:Virtue ;
+  fot:label "Honesty" ;
+  rdfs:comment "The quality of being truthful and transparent in all interactions" ;
+  fot:measurementRange "0.0 to 1.0" ;
+  fot:defaultValue 0.5 .
+
+ex:Curiosity a fot:Virtue ;
+  fot:label "Curiosity" ;
+  rdfs:comment "The desire to learn, explore, and understand new things" ;
+  fot:measurementRange "0.0 to 1.0" ;
+  fot:defaultValue 0.6 .
+
+ex:Patience a fot:Virtue ;
+  fot:label "Patience" ;
+  rdfs:comment "The ability to wait calmly and persistently for desired outcomes" ;
+  fot:measurementRange "0.0 to 1.0" ;
+  fot:defaultValue 0.5 .
+
+ex:Justice a fot:Virtue ;
+  fot:label "Justice" ;
+  rdfs:comment "The quality of being fair and impartial in decision-making" ;
+  fot:measurementRange "0.0 to 1.0" ;
+  fot:defaultValue 0.7 .
+
+ex:Transparency a fot:Virtue ;
+  fot:label "Transparency" ;
+  rdfs:comment "The quality of being open and clear about processes and decisions" ;
+  fot:measurementRange "0.0 to 1.0" ;
+  fot:defaultValue 0.6 .
+
+ex:Fairness a fot:Virtue ;
+  fot:label "Fairness" ;
+  rdfs:comment "The quality of treating all parties equally and without bias" ;
+  fot:measurementRange "0.0 to 1.0" ;
+  fot:defaultValue 0.7 .
