@@ -6,6 +6,12 @@ world metrics_api {
     record_usage: func(user_id: string, action: string, duration: u64) -> result<(), u32>;
     get_stats: func(user_id: string) -> result<string, u32>;
     export_metrics: func() -> result<string, u32>;
+    
+    // HARMONIC RESONANCE FUNCTIONS
+    record_resonance: func(agent_id: string, context: string, resonance_amplitude: f64) -> result<(), u32>;
+    measure_harmonic_coherence: func(agent_ids: string, context: string) -> result<f64, u32>;
+    calculate_truth_field: func(claim: string, agent_contexts: string) -> result<f64, u32>;
+    get_resonance_spectrum: func(domain: string) -> result<string, u32>;
   }
   export metrics_collector: func(input: string) -> string;
 }
