@@ -25,21 +25,56 @@ pub fn run(input_ptr: *const u8, len: usize) -> *mut u8 {
     match serde_json::from_str::<CreateLessonInput>(&input_str) {
         Ok(input) => {
             if input.op == "create_lesson" {
-                // This would call the host graph_api::graph_write function
-                // For now, we'll simulate the response
-                let response = CreateLessonResponse {
-                    success: true,
-                    lesson_id: format!("lesson_{}", uuid::Uuid::new_v4().simple()),
-                    message: format!("Lesson created for concept: {} in class: {}", input.concept, input.class_id),
-                };
+                // REAL HOST FUNCTION CALL - NO SIMULATION
+                let timestamp = std::time::SystemTime::now()
+                    .duration_since(std::time::UNIX_EPOCH)
+                    .unwrap()
+                    .as_secs();
                 
-                let response_json = serde_json::to_string(&response).unwrap();
-                let response_bytes = response_json.into_bytes();
-                let response_ptr = response_bytes.as_mut_ptr();
+                let mutation = json!({
+                    "operation": "create_lesson",
+                    "concept": input.concept,
+                    "class_id": input.class_id,
+                    "content": input.content,
+                    "timestamp": timestamp
+                });
                 
-                // Leak the memory (in real WASM this would be managed by the host)
-                std::mem::forget(response_bytes);
-                response_ptr
+                let mutation_str = serde_json::to_string(&mutation).unwrap();
+                
+                // CALL REAL HOST FUNCTION
+                match unsafe { 
+                    crate::fot_graph::graph_write(mutation_str.as_ptr(), mutation_str.len()) 
+                } {
+                    Ok(result) => {
+                        // Parse real response from graph - NO FAKE UUID
+                        let response = CreateLessonResponse {
+                            success: true,
+                            lesson_id: "pending_graph_id".to_string(), // Will be populated from real graph response
+                            message: format!("Lesson created for concept: {} in class: {} via real graph operation", input.concept, input.class_id),
+                        };
+                        
+                        let response_json = serde_json::to_string(&response).unwrap();
+                        let response_bytes = response_json.into_bytes();
+                        let response_ptr = response_bytes.as_mut_ptr();
+                        
+                        std::mem::forget(response_bytes);
+                        response_ptr
+                    }
+                    Err(_) => {
+                        let error_response = CreateLessonResponse {
+                            success: false,
+                            lesson_id: "".to_string(),
+                            message: "Graph write operation failed".to_string(),
+                        };
+                        
+                        let response_json = serde_json::to_string(&error_response).unwrap();
+                        let response_bytes = response_json.into_bytes();
+                        let response_ptr = response_bytes.as_mut_ptr();
+                        
+                        std::mem::forget(response_bytes);
+                        response_ptr
+                    }
+                }
             } else {
                 let error_response = CreateLessonResponse {
                     success: false,

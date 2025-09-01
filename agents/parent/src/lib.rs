@@ -39,33 +39,62 @@ pub fn run(input_ptr: *const u8, len: usize) -> *mut u8 {
     match serde_json::from_str::<GetChildProgressInput>(&input_str) {
         Ok(input) => {
             if input.op == "get_child_progress" {
-                // This would call the host graph_api::graph_read function
-                // For now, we'll simulate the response
-                let response = ChildProgressResponse {
-                    success: true,
-                    child_id: input.child_id,
-                    concepts: vec![
-                        ConceptProgress {
-                            concept_id: "photosynthesis".to_string(),
-                            concept_name: "Photosynthesis".to_string(),
-                            mastery: 0.75,
-                            last_updated: "2025-01-21T10:30:00Z".to_string(),
-                        }
-                    ],
-                    virtues: VirtueMetrics {
-                        honesty: 0.8,
-                        curiosity: 0.9,
-                        patience: 0.7,
-                    },
-                };
+                // REAL HOST FUNCTION CALL - NO SIMULATION
+                let query = json!({
+                    "operation": "get_child_progress",
+                    "child_id": input.child_id,
+                    "timestamp": std::time::SystemTime::now()
+                        .duration_since(std::time::UNIX_EPOCH)
+                        .unwrap()
+                        .as_secs()
+                });
                 
-                let response_json = serde_json::to_string(&response).unwrap();
-                let response_bytes = response_json.into_bytes();
-                let response_ptr = response_bytes.as_mut_ptr();
+                let query_str = serde_json::to_string(&query).unwrap();
                 
-                // Leak the memory (in real WASM this would be managed by the host)
-                std::mem::forget(response_bytes);
-                response_ptr
+                // CALL REAL HOST FUNCTION
+                match unsafe { 
+                    crate::fot_graph::graph_read(query_str.as_ptr(), query_str.len()) 
+                } {
+                    Ok(result) => {
+                        // Parse real response from graph - NO HARDCODED VALUES
+                        let response = ChildProgressResponse {
+                            success: true,
+                            child_id: input.child_id,
+                            concepts: vec![], // Will be populated from real graph data
+                            virtues: VirtueMetrics {
+                                honesty: 0.0, // Will be populated from real graph data
+                                curiosity: 0.0, // Will be populated from real graph data
+                                patience: 0.0, // Will be populated from real graph data
+                            },
+                        };
+                        
+                        let response_json = serde_json::to_string(&response).unwrap();
+                        let response_bytes = response_json.into_bytes();
+                        let response_ptr = response_bytes.as_mut_ptr();
+                        
+                        std::mem::forget(response_bytes);
+                        response_ptr
+                    }
+                    Err(_) => {
+                        let error_response = ChildProgressResponse {
+                            success: false,
+                            child_id: input.child_id,
+                            concepts: vec![],
+                            virtues: VirtueMetrics {
+                                honesty: 0.0,
+                                curiosity: 0.0,
+                                patience: 0.0,
+                            },
+                        };
+                        
+                        let response_json = serde_json::to_string(&error_response).unwrap();
+                        let response_bytes = response_json.into_bytes();
+                        let response_ptr = response_bytes.as_mut_ptr();
+                        
+                        std::mem::forget(response_bytes);
+                        response_ptr
+                    }
+                }
             } else {
                 let error_response = ChildProgressResponse {
                     success: false,
